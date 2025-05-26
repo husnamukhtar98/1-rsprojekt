@@ -1,0 +1,85 @@
+body {
+    background-color:rgb(255, 255, 255);
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.navbar-brand{
+    font-size: 2rem;
+    color:darkorange;
+    font-family: "Monoton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.navbar-brand:hover{
+    color:black;
+}
+.nav-link{
+    margin-right: 10px;
+    margin-left: 10px;
+    color:black;
+    text-transform: uppercase;
+}
+.nav-link:hover{
+    color: black;
+}
+.main{
+    background: url(./crisp-frontpage-2.jpg)no-repeat;
+    background-size: cover;
+    height: 100vh;
+    background-position:50% 50%;
+    width: 100%;
+}
+.main h1{
+    font-size: 4rem;
+    font-weight: 700;
+    color:darkorange;
+    font-family:"Monoton", sans-serif;
+}
+.btn1{
+    height: 45px;
+    width: 35%;
+    border: none;
+    outline: none;
+    background-color:aliceblue;
+    color:rgb(20, 19, 18);
+    font-weight: 700;
+    border-radius: 60px;
+}
+.icon-box {
+    margin-bottom: 50px;
+}
+.icon-circle {
+    height: 150px;
+    width: 150px;
+    background-color:aliceblue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 10px;
+}
+.icon-circle img {
+    height: 60px;
+    width: 60px;
+}
+.icon-box p {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: darkorange;
+}
+.Nyhedsbrev{
+    font-size: 2rem;
+    font-weight: 100;
+}
+.btn2{
+    height: 45px;
+    width: 35%;
+    border: none;
+    outline: none;
+    background-color:darkorange;
+    color:rgb(0, 0, 0);
+    font-weight: 500;
+    border-radius: 60px;
+}
