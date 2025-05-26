@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- wrap in same responsive container + inline styles -->
+<div class="container">
+  <style>
+    /* make form controls full‐width and spaced */
+    form input,
+    form button {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+    body {
+      padding: 1rem;
+    }
+    @media (min-width: 480px) {
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+
+  <h2>{{ 'Edit' if table else 'New' }} Table</h2>
+  <form method="post">
+    <label for="capacity">Capacity:</label><br>
+    <input
+      type="number"
+      id="capacity"
+      name="capacity"
+      min="1"
+      value="{{ table.capacity if table else '' }}"
+      required><br><br>
+
+    <button type="submit">
+      {{ 'Update' if table else 'Create' }}
+    </button>
+
+    <p><a href="{{ url_for('main.admin_tables') }}">Cancel</a></p>
+  </form>
+</div>
+{% endblock %}

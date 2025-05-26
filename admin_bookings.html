@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  /* Top button container → make it a flexbox */
+  .top-buttons {
+    display: flex;                /* new */
+    justify-content: space-between; /* new: push buttons to edges */
+    align-items: center;          /* new: vertical center */
+    margin-bottom: 1rem;
+  }
+  .top-buttons a {
+    display: inline-block;
+    margin-right: 0.5em;
+    padding: 0.4em 0.8em;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .top-buttons a:hover {
+    background-color: #0056b3;
+  }
+
+  /* new: group left‐side buttons together */
+  .left-buttons {
+    display: flex;
+  }
+
+  .left-buttons a {
+    margin-right: 0.5rem;
+  }
+
+  /* Icon action buttons in the table */
+  .action-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    color: #333;
+  }
+  /* ← new: gap between Edit & Delete icons */
+  .action-btn + .action-btn {
+    margin-left: 0.5rem;
+  }
+
+  .action-btn:hover {
+    color: #000;
+  }
+
+  /* Optional: give some spacing in the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  th, td {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  thead {
+    background-color: #f0f0f0;
+  }
+</style>
+
+<h2>All Bookings</h2>
+
+<div class="top-buttons">
+  <!-- left side: New Booking + Manage Tables -->
+  <div class="left-buttons">
+    <a href="{{ url_for('main.admin_booking_create') }}">➕ New Booking</a>
+    <a href="{{ url_for('main.admin_tables') }}">📋 Manage Tables</a>
+  </div>
+  <!-- right side: Log Out -->
+  <a href="{{ url_for('main.admin_logout') }}">🔒 Log Out</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>When</th>
+      <th>Party</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in bookings %}
+    <tr>
+      <td>{{ b.customer.name }}</td>
+      <td>{{ b.customer.email }}</td>
+      <td>{{ b.start_time.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ b.party_size }}</td>
+      <td>
+        <!-- Edit icon (GET) -->
+        <!-- Delete icon (POST) -->
+        <a href="{{ url_for('main.admin_booking_edit', id=b.id) }}">
+          <button class="action-btn" title="Edit">✏️</button></a>
+          <form action="{{ url_for('main.admin_booking_delete', id=b.id) }}" 
+              method="post" style="display:inline">
+            <button class="action-btn" title="Delete">🗑️</button>
+          </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

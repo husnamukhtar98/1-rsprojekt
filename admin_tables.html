@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  /* Top button container → make it a flexbox */
+  .top-buttons {
+    display: flex;                /* new */
+    justify-content: space-between; /* new: push buttons to edges */
+    align-items: center;          /* new: vertical center */
+    margin-bottom: 1rem;
+  }
+  .top-buttons a {
+    display: inline-block;
+    margin-right: 0.5em;
+    padding: 0.4em 0.8em;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .top-buttons a:hover {
+    background-color: #0056b3;
+  }
+
+  /* new: group left‐side buttons together */
+  .left-buttons {
+    display: flex;
+  }
+
+  .left-buttons a {
+    margin-right: 0.5rem;
+  }
+
+  /* Icon action buttons in the table */
+  .action-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    color: #333;
+  }
+  /* ← new: gap between Edit & Delete icons */
+  .action-btn + .action-btn {
+    margin-left: 0.5rem;
+  }
+
+  .action-btn:hover {
+    color: #000;
+  }
+
+  /* Optional: give some spacing in the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  th, td {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  thead {
+    background-color: #f0f0f0;
+  }
+</style>
+
+<h2>Manage Tables</h2>
+
+<!-- header & buttons -->
+<div class="top-buttons">
+  <div class="left-buttons">
+    <a href="{{ url_for('main.admin_table_create') }}">➕ New Table</a>
+    <a href="{{ url_for('main.admin_bookings') }}">← Back to Bookings</a>
+  </div>
+  <a href="{{ url_for('main.admin_logout') }}">🔒 Log Out</a>
+</div>
+
+<!-- tables list -->
+<table>
+  <thead>
+    <tr><th>ID</th><th>Capacity</th><th>Actions</th></tr>
+  </thead>
+    {% for t in tables %}
+    <tr>
+    <td>{{ t.id }}</td>
+    <td>{{ t.capacity }}</td>
+    <td>
+      <a href="{{ url_for('main.admin_table_edit', id=t.id) }}">
+        <button class="action-btn" title="Edit ✏️">✏️</button></a>
+        <form action="{{ url_for('main.admin_table_delete', id=t.id) }}"
+            method="post" style="display:inline">
+          <button class="action-btn" title="Delete 🗑️">🗑️</button>
+        </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+</div> 
+{% endblock %}

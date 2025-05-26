@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- wrap everything in the same responsive container -->
+<div class="container">
+  <style>
+    /* make form controls full‐width and spaced */
+    form input,
+    form select,
+    form button,
+    form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+    body {
+      padding: 1rem;
+    }
+    @media (min-width: 480px) {
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+
+  <h2>{{ 'Edit' if booking else 'New' }} Booking</h2>
+  <form method="post">
+    <label for="name">Name:</label><br>
+    <input type="text"
+           id="name" 
+           name="name"
+           value="{{ booking.customer.name if booking else '' }}"
+           required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" 
+           id="email"
+           name="email"
+           value="{{ booking.customer.email if booking else '' }}"
+           required><br><br>
+
+    <label for="datetime">Date &amp; Time:</label><br>
+    <input type="datetime-local"
+           id="datetime"
+           name="datetime"
+           value="{% if booking %}{{ booking.start_time.strftime('%Y-%m-%dT%H:%M') }}{% endif %}"
+           required><br><br>
+
+    <label>Party Size:</label><br>
+    <input type="number" name="party_size" min="1"
+           value="{{ booking.party_size if booking else 1 }}"
+           required><br><br>
+
+    <button type="submit">{{ 'Update' if booking else 'Create' }}</button>
+    <p><a href="{{ url_for('main.admin_bookings') }}">Cancel</a></p>
+  </form>
+</div>
+{% endblock %}

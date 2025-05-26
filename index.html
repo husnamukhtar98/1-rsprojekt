@@ -1,4 +1,117 @@
-{% extends 'base.html' %}
-{% block title %}MENU/CRISP{% endblock %}
+{% extends "base.html" %}
 {% block content %}
+<div class="container">
+
+  <style>
+    /* make form fields full width and spaced */
+    form input,
+    form select,
+    form button {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+    body {
+      padding: 1rem;
+    }
+    /* constrain the form on larger screens */
+    @media (min-width: 480px) {
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+    /* styling for our helper text under inputs */
+    .note {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+
+  <h1>Reserve a Table</h1>
+
+  <!-- Step 1: pick party size & date (auto-submit when both chosen) -->
+  <form id="picker" method="get" action="{{ url_for('main.booking_index') }}">
+    <label>Party Size:</label><br>
+    <input type="number"
+           name="party_size"
+           min="1"
+           value="{{ selected_size }}"
+           required>
+           <p class="note">
+            Parties over 10? Please
+            <a href="mailto:info@crisp.dk">info@crisp.dk</a>
+            or call +45 12 34 56 78.
+          </p>
+    <br><br>
+
+    <label>Choose Date:</label><br>
+    <input type="date"
+           name="date"
+           value="{{ selected_date }}"
+           required>
+           <p class="note">
+            Vi reserverer en række borde specifikt til walk-in gæster, sikrende at vi altid har plads til spontane besøg. Disse borde kan ikke reserveres på forhånd, hvilket giver mulighed for at tage imod gæster uden reservation.
+
+Vores brunch slutter kl 12.30 i hverdage og 13.00 i weekenden. Frokosten starter kl. 12.45 i hverdage og 13.30 i weekenden.
+
+Det er IKKE muligt at bestille bord udenfor, da det er først til mølle.
+
+Bookinger er forbeholdt spisende gæster.
+
+Vær opmærksom på at nogle af vores borde er højborde og sofagrupper.
+
+- Ved bookinger på mere end 10 gæster pr. bord bedes man kontakte os på frederiksberg@madogkaffe.dk
+
+- Vi vil forsøge at svare hurtigst muligt. Send gerne din forespørgsel om booking i god tid.
+
+Vores telefon er beregnet til madafhentning og IKKE reservationer. Der bedes du benytte til bookingmail.
+
+Vi glæder os til at se jer <3
+          </p>
+  </form>
+
+  <!-- Step 2: only if we have slots -->
+  {% if slots %}
+    <form method="post" action="{{ url_for('main.book') }}">
+      <input type="hidden" name="party_size" value="{{ selected_size }}">
+
+      <label>Available Times:</label><br>
+      <select name="time" required>
+        {% for s in slots %}
+          <option value="{{ s.isoformat() }}">
+            {{ s.strftime('%H:%M') }}
+          </option>
+        {% endfor %}
+      </select>
+      <br><br>
+
+      <label>Name:</label><br>
+      <input type="text" name="name" required><br><br>
+
+      <label>Email:</label><br>
+      <input type="email" name="email" required><br><br>
+
+      <label for="comments">Comments (optional):</label><br>
+      <textarea id="comments" name="comments" rows="3"></textarea>
+      <br><br>
+
+      <button type="submit">Book Now</button>
+    </form>
+  {% endif %}
+
+  <script>
+    // auto-submit the GET form as soon as both fields are filled
+    const sizeInput = document.querySelector('input[name="party_size"]');
+    const dateInput = document.querySelector('input[name="date"]');
+    sizeInput.addEventListener('change', () => {
+      if (sizeInput.value && dateInput.value) document.getElementById('picker').submit();
+    });
+    dateInput.addEventListener('change', () => {
+      if (sizeInput.value && dateInput.value) document.getElementById('picker').submit();
+    });
+  </script>
+</div>
 {% endblock %}
