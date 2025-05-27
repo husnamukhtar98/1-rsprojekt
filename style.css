@@ -46,29 +46,6 @@ body {
     font-weight: 700;
     border-radius: 60px;
 }
-.icon-box {
-    margin-bottom: 50px;
-}
-.icon-circle {
-    height: 150px;
-    width: 150px;
-    background-color:aliceblue;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 10px;
-}
-.icon-circle img {
-    height: 60px;
-    width: 60px;
-}
-.icon-box p {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
-    color: darkorange;
-}
 .Nyhedsbrev{
     font-size: 2rem;
     font-weight: 100;
