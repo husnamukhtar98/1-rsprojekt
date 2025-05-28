@@ -8,6 +8,6 @@ def home():
 
 @app.route('/')
 def bookbord():
-    return render_template('index.html')
+    return render_template('bookbord.html')
 
 app.run(debug=True)
