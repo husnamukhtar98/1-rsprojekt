@@ -6,7 +6,7 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('bookbord/')
+@app.route('/bookbord')
 def bookbord():
     return render_template('bookbord.html')
 
